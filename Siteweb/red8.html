@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2beSMART</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style_red.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
+    <style>
+        .game-container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 70px;
+        }
+
+        .score-board {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #334155;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .viewports-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .viewport {
+            flex: 1;
+            height: 180px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #cbd5e1;
+        }
+
+
+        .side-view {
+            background: linear-gradient(to top, #bae6fd, #e0f2fe);
+        }
+
+        .side-rope {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #334155;
+        }
+
+        .character-side {
+            position: absolute;
+            bottom: 43px;
+            left: 0%;
+            font-size: 45px;
+            width: 40px;
+            height: 40px;
+            transition: left 0.4s ease-out;
+        }
+
+        .character-side.walking {
+            animation: sideWalk 0.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes sideWalk {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-4px);
+            }
+        }
+
+        .finish-line {
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            font-size: 35px;
+        }
+
+        .back-view {
+            background: linear-gradient(to top, #38bdf8, #bae6fd);
+            perspective: 150px;
+        }
+
+        .rope-3d {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 8px;
+            height: 150%;
+            background: repeating-linear-gradient(to bottom, #334155, #334155 15px, #64748b 15px, #64748b 30px);
+            transform: translateX(-50%) rotateX(60deg);
+            transform-origin: bottom center;
+            background-size: 100% 30px;
+        }
+
+        .rope-3d.moving {
+            animation: moveForward 0.4s linear infinite;
+        }
+
+        @keyframes moveForward {
+            from {
+                background-position-y: 0px;
+            }
+
+            to {
+                background-position-y: 30px;
+            }
+        }
+
+        .character-back {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            font-size: 55px;
+            width: 55px;
+            height: 70px;
+            margin-left: 0px;
+            transform-origin: bottom center;
+            transition: transform 0.3s ease-out;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .comment-box {
+            background: #f8fafc;
+            border-left: 5px solid #f60984;
+            padding: 15px;
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        #comment-text {
+            font-style: italic;
+            color: #1e293b;
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-green {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .btn-green:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-red {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .btn-red:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        #btn-restart {
+            background-color: #0284c7;
+            color: white;
+            margin-top: 15px;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 272px;
+            left: 83px;
+            width: 83%;
+            height: 80%;
+            background: rgba(15, 23, 42, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header-fix">
+        <a href="red7.html" class="buton">Articolul Anterior</a>
+        <span class="linie-sageata stanga"></span>
+        <a href="info.html" class="buton buton-centru">
+            <i class="fa fa-home"></i>
+            <span class="text-buton">Acasă</span>
+        </a>
+        <span class="linie-sageata dreapta"></span>
+        <a href="red9.html" class="buton">Articolul Următor</a>
+    </header>
+
+    <div class="title">
+        <h3>Gândirea liberă sau atac la persoană?</h3>
+    </div>
+    <section class="tab-section">
+        <div class="tabs">
+            <button class="tab-btn active">Informaţie</button>
+            <button class="tab-btn">Prezentare</button>
+            <button class="tab-btn">Exemple</button>
+            <button class="tab-btn">Bibliografie</button>
+        </div>
+
+        <div class="content active">
+            <h6 class="intro">Introducere</h6>
+            <p>În era rețelelor sociale, granița dintre exprimarea unei opinii legitime și agresiunea verbală a devenit
+                extrem de fragilă. Imaginați-vă un acrobat care merge pe o sârmă întinsă deasupra unui abis digital:
+                feedback-ul constructiv îl ajută să își mențină echilibrul și să înainteze, în timp ce atacurile la
+                persoană îl dezechilibrează instantaneu, prăbușindu-l în gol.
+                Libertatea de exprimare ne oferă dreptul de a analiza, de a contesta și de a critica idei, instituții
+                sau acțiuni. Totuși, această libertate nu reprezintă un cec în alb pentru distrugerea demnității umane
+                prin minciuni, jigniri sau manipulări. Acest articol analizează, din perspectivă tehnico-științifică și
+                publicistică, mecanismele psihologice, lingvistice și juridice care separă gândirea liberă de fapta
+                ilegală în spațiul online.
+
+            </p>
+            <h6 class="sub1">1. Delimitări conceptuale și psihologia comunicării online</h6>
+            <p>Pentru a înțelege de ce unele comentarii ne propulsează înainte, în timp ce altele ne sabotează, trebuie
+                să analizăm structura fundamentală a interacțiunii umane mediate de tehnologie.</p>
+            <div class="subtitle">1.1. Critica constructivă: pilonul gândirii libere</div>
+            <p>Critica constructivă se concentrează pe obiectul discuției (o idee, un text, o performanță, un produs) și
+                nu pe subiectul care l-a creat. Ea este ghidată de intenția de îmbunătățire și se bazează pe argumente
+                logice, fapte verificabile și un limbaj non-violent. În modelul acrobatului nostru, critica constructivă
+                funcționează ca o bară de echilibru: oferă puncte de sprijin reale prin care creatorul își poate ajusta
+                traiectoria.</p>
+            <div class="subtitle">1.2. Atacul la persoană (Ad Hominem) și efectul de dezinhibiție digitală</div>
+            <p>La polul opus, atacul la persoană (cunoscut în logică sub denumirea de eroare argumentativă ad hominem)
+                redirecționează atenția de la argument la caracteristicile personale ale interlocutorului: aspect fizic,
+                inteligență, gen, etnie sau trecut personal.</p>
+            <p>În mediul online, acest fenomen este amplificat de ceea ce psihologul John Suler (2004) a numit Efectul
+                de Dezinhibiție Digitală. Lipsa contactului vizual, anonimatul aparent și asincronicitatea comunicării
+                îi fac pe utilizatori să spună lucruri pe care nu le-ar rosti niciodată față în față. Atacul la persoană
+                nu caută adevărul, ci neutralizarea psihologică a celuilalt, provocând acea „cădere” simbolică de pe
+                sârmă.</p>
+            <h6 class="sub2">2. Clasificarea algoritmică a comentariilor: anatomia unui algoritm de validare</h6>
+            <p>Cum putem transpune această dinamică într-un sistem digital capabil să clasifice automat dacă un personaj
+                își menține echilibrul sau cade? Răspunsul stă în procesarea limbajului natural (NLP - Natural Language
+                Processing).</p>
+            <div class="subtitle">2.1. Indicatori lingvistici ai feedback-ului valid</div>
+            <p>Un algoritm antrenat să recunoască gândirea liberă și critica constructivă va căuta structuri gramaticale
+                și semantice specifice:</p>
+            <div class="subtitle">
+                <p> •<b>Utilizarea conectorilor logici:</b> „deoarece”, „prin urmare”, „în comparație cu”. <br>
+                    •<b>Focalizarea pe acțiune/obiect:</b> Verbe care descriu procese („textul conține”, „codul rulează
+                    încet”, „argumentul nu acoperă”).<br>
+                    •<b>Limbaj nuanțat:</b> Folosirea unor atenuatori precum „s-ar putea”, „în opinia mea”, „sugerez”.
+                </p>
+            </div>
+            <div class="subtitle">2.2. Semnale de alarmă pentru atacul la persoană</div>
+            <p>Sistemele automate de moderare folosesc tehnici de analiză a sentimentelor (Sentiment Analysis) și
+                Detectarea Discursului de Ură (Hate Speech Detection) pentru a identifica elementele toxice:</p>
+            <div class="subtitle">
+                <p> • Lexic injurios sau peiorativ: Jigniri directe sau etichetări reducționiste.<br>
+                    • Schimbarea focalizării (Shift of Focus): Trecerea bruscă de la tema postării la persoana autorului
+                    (ex: „Cine ești tu să vorbești despre asta?”, „Uită-te cum arăți”).<br>
+                    • Sintaxă agresivă: Folosirea excesivă a semnelor de exclamare, scrierea integrală cu majuscule
+                    (echivalentul digital al țipătului) și generalizările absolute („niciodată”, „tot timpul”, „toți cei
+                    ca tine”).
+                </p>
+            </div>
+
+            <h6 class="sub3">3. Perspectiva juridică: Unde se termină opinia și începe fapta ilegală?</h6>
+            <p>Sintagma „am dreptul la opinie” este adesea folosită greșit ca scut pentru abuz. Libertatea de exprimare
+                este un drept fundamental, însă nu este unul absolut.</p>
+            <div class="subtitle"> 3.1 Analiza argumentelor</div>
+            <p>Curtea Europeană a Drepturilor Omului (CEDO) a stabilit o jurisprudență clară în această privință.
+                Conform Articolului 10 din Convenția Europeană a Drepturilor Omului, libertatea de exprimare protejează
+                inclusiv ideile care „ofensează, șochează sau deranjează”. Totuși, Curtea distinge clar între
+                <b>judecățile de valoare</b> (opinii care au o bază factuală minimă) și <b>afirmațiile factuale false
+                </b> exclusiv distrugerii reputației unei persoane (calomnie/defăimare). Atunci când un comentariu trece
+                la insultă gratuită sau incitare la ură, protecția oferită de Articolul 10 încetează, iar fapta devine
+                ilicită.
+            </p>
+
+            <div class="subtitle">3.2. Calomnia, defăimarea și cyberbullying-ul în legislația națională</div>
+            <p>În plan juridic, atacul la persoană din online poate îmbrăca forme legale grave:</p>
+            <div class="subtitle">
+                <p>1. <b>Defăimarea online:</b> Răspândirea cu rea-credință de informații false despre o persoană, de
+                    natură să îi prejudicieze imaginea publică sau profesională.<br>
+                    2. <b>Cyberbullying (Hărțuirea cibernetică):</b> Atacuri sistematice, repetate, menite să
+                    intimideze, să umilească sau să marginalizeze o persoană. Multe state au incriminat distinct aceste
+                    comportamente, atrăgând răspunderea civilă (daune morale) sau chiar penală.
+                </p>
+            </div>
+
+            <h6 class="sub4">4. Dinamica neurobiologică și psihologică: Efectele criticii pozitive vs. negative</h6>
+            <p>Impactul comentariilor din mediul online nu se rezumă la o simplă reacție emoțională de moment; el
+                generează modificări profunde la nivel neurobiologic și cognitiv. Pentru a înțelege de ce un atac la
+                persoană determină „căderea” psihologică a individului, în timp ce o critică constructivă sau un
+                feedback pozitiv îi mențin echilibrul, trebuie să analizăm modul în care creierul uman procesează aceste
+                două tipuri de stimuli.</p>
+
+            <div class="subtitle">4.1. Asimetria procesării: De ce critica cegativă cântărește mai mult?
+                <p>Din punct de vedere evolutiv, creierul uman este programat să fie mult mai receptiv la stimulii
+                    negativi decât la cei pozitivi. Acest fenomen este cunoscut în psihologia cognitivă sub numele de
+                    „prejudecată de negativitate” (negativity bias). În trecutul ancestral, identificarea rapidă a unei
+                    amenințări (un prădător sau excluderea din trib) era vitală pentru supraviețuire, în timp ce un
+                    stimul pozitiv (o laudă sau un confort temporar) putea fi ignorat fără consecințe fatale. <br>
+                    În contextul rețelelor sociale, un atac la persoană activează instantaneu amygdala, centrul cerebral
+                    responsabil pentru declanșarea reacției de tip „luptă sau fugă” (fight or flight). Studiile
+                    imagistice prin rezonanță magnetică funcțională (fMRI) arată că respingerea socială și jignirile
+                    activează exact aceleași arii corticale implicate în procesarea durerii fizice — cortexul cingular
+                    anterior dorsal și cortexul insular anterior (Eisenberger et al., 2003). Prin urmare, atunci când un
+                    utilizator citește un comentariu toxic, creierul său nu face distincția între o agresiune fizică și
+                    una verbală; suferința resimțită este reală și profundă. Această reactivitate crescută explică de ce
+                    un singur comentariu răutăcios poate anula impactul psihologic a zece recenzii pozitive,
+                    dezechilibrând complet starea de bine a individului.</p>
+            </div>
+
+            <div class="subtitle">4.2. Neurobiologia feedback-ului constructiv și pozitiv
+                <p>La polul opus, critica constructivă și validarea pozitivă acționează asupra unor circuite neuronale
+                    complet diferite, legate de sistemul de recompensă al creierului. Atunci când o persoană primește un
+                    feedback structurat, bazat pe respect și orientat spre progres, organismul eliberează dopamină și
+                    oxitocină.
+                    Dopamina stimulează motivația, îmbunătățește neuroplasticitatea și facilitează învățarea. Spre
+                    deosebire de atacul la persoană, care blochează capacitatea de analiză a cortexului prefrontal prin
+                    inundarea creierului cu cortisol (hormonul stresului), feedback-ul constructiv menține cortexul
+                    prefrontal activ. Acest lucru îi permite individului să proceseze informația în mod rațional, să își
+                    corecteze greșelile și să își îmbunătățească performanța. Oxitocina, supranumită și hormonul
+                    atașamentului, reduce anxietatea și creează un sentiment de siguranță psihologică în cadrul
+                    comunității digitale. În acest mod, utilizatorul își păstrează „echilibrul pe sârmă”: el nu se simte
+                    amenințat ca ființă, ci se simte ghidat ca profesionist sau creator, transformând feedback-ul într-o
+                    resursă de creștere personală.
+                </p>
+            </div>
+            <h6 class="sub5">5. Studii de caz și cercetări științifice relevante</h6>
+            <p>Fenomenul violenței verbale online a fost intens studiat în ultimul deceniu de sociologi și cercetători
+                în securitate cibernetică.</p>
+
+            <div class="subtitle">5.1. Corelația dintre anonimat și toxicitate (Studiul Universității Stanford)
+                <p>Un studiu de referință realizat de cercetătorii de la Universitatea Stanford și Universitatea Cornell
+                    (Cheng et al., 2017) a demonstrat că comportamentul de tip „troll” nu este o trăsătură înnăscută a
+                    unui grup restrâns de oameni, ci este contextual. Combinația dintre o dispoziție negativă (o zi
+                    proastă) și expunerea la un context de discuție deja toxic crește cu peste 50% șansele ca un
+                    utilizator obișnuit să posteze un atac la persoană. Acest lucru arată cât de ușor se poate
+                    dezechilibra balanța într-o comunitate digitală.</p>
+            </div>
+            <div class="subtitle">5.2. Impactul psihologic asupra victimelor (Date Pew Research Center)
+                <p>Conform datelor publicate de Pew Research Center, aproximativ 41% dintre adulții din mediul online au
+                    experimentat o formă de hărțuire digitală. Studiile clinice asociate arată că atacurile sistematice
+                    la persoană declanșează răspunsuri fiziologice de stres similare cu cele din agresiunile fizice:
+                    secreție crescută de cortisol, anxietate severă, tulburări de somn și, în cazuri extreme, depresie
+                    clinică. Căderea de pe sârmă nu este doar o metaforă vizuală, ci o realitate medicală dureroasă.</p>
+            </div>
+            <h6 class="sub6">Concluzii</h6>
+            <p>Menținerea echilibrului pe sârma comunicării online necesită un efort comun din partea utilizatorilor, a
+                creatorilor de platforme și a specialiștilor în tehnologie.<br>
+                Gândirea liberă este oxigenul unei societăți democratice; ea trebuie încurajată să se manifeste prin
+                critici ascuțite, întrebări inconfortabile și dezbateri intense. Totuși, în momentul în care critica
+                părăsește argumentul și atacă omul, ea își pierde valoarea socială și devine un act de agresiune.<br>
+                Dezvoltarea unor sisteme de clasificare vizuală și algoritmică – precum cel în care comentariile toxice
+                determină căderea personajului – reprezintă instrumente educaționale excelente pentru tineri. Ele
+                transformă un concept abstract (etica digitală) într-o realitate vizuală imediată, învățându-ne pe toți
+                că cuvintele noastre au greutate: pot fi o plasă de siguranță sau forța care împinge pe cineva în gol.
+
+            </p>
+            <div class="timeline-nav">
+                <div class="timeline-line-bg">
+                    <div class="timeline-line-progress" id="timelineProgress"></div>
+                </div>
+
+                <div class="timeline-step" data-section="intro">
+                    <div class="circle"></div>
+                    <span class="step-text">Introducere</span>
+                </div>
+                <div class="timeline-step" data-section="sub1">
+                    <div class="circle"></div>
+                    <span class="step-text">Capitolul 1</span>
+                </div>
+                <div class="timeline-step" data-section="sub2">
+                    <div class="circle"></div>
+                    <span class="step-text">Capitolul 2</span>
+                </div>
+                <div class="timeline-step" data-section="sub3">
+                    <div class="circle"></div>
+                    <span class="step-text">Capitolul 3</span>
+                </div>
+                <div class="timeline-step" data-section="sub4">
+                    <div class="circle"></div>
+                    <span class="step-text">Capitolul 4</span>
+                </div>
+                <div class="timeline-step" data-section="sub5">
+                    <div class="circle"></div>
+                    <span class="step-text">Capitolul 5</span>
+                </div>
+                <div class="timeline-step" data-section="sub6">
+                    <div class="circle"></div>
+                    <span class="step-text">Capitolul 6</span>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h2>Echilibrul pe sârmă</h2>
+            <p class="instructions">Răspunde corect pentru a avansa către linia de sosire!</p>
+
+            <div class="score-board">
+                Scor: <span id="score">0</span> | Progres: <span id="progress">0</span>% | Înclinare: <span
+                    id="tilt-display">0°</span>
+            </div>
+
+            <div class="viewports-container">
+                <div class="viewport side-view">
+                    <div class="side-rope"></div>
+                    <div id="char-side" class="character-side">🏃‍♂️‍➡️</div>
+                    <div class="finish-line">🏁</div>
+                </div>
+                <div class="viewport back-view">
+                    <div id="rope-back" class="rope-3d"></div>
+                    <div id="char-back" class="character-back">🧘‍♂️</div>
+                </div>
+            </div>
+            <div class="comment-box">
+                <p id="comment-text">Se încarcă primul comentariu...</p>
+            </div>
+
+            <div class="controls">
+                <button id="btn-constructive" class="btn btn-green">Critică Constructivă</button>
+                <button id="btn-attack" class="btn btn-red">Atac la Persoană</button>
+            </div>
+
+            <div id="overlay" class="overlay hidden">
+                <div class="overlay-content">
+                    <h3 id="overlay-title">Game Over</h3>
+                    <p id="overlay-text">Mesaj final</p>
+                    <button id="btn-restart" class="btn">Joacă din nou</button>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h6>Cazul Justine Sacco (2013)</h6>
+            <p>În 2013, înainte de a se urca într-un avion, Justine Sacco, un specialist în relații publice, a postat pe
+                Twitter o glumă insensibilă și greșită despre un virus global. Până la aterizare, mesajul devenise
+                viral. Cazul ilustrează perfect trecerea de la critica legitimă a unei afirmații la un atac la persoană
+                generalizat și violent.
+                Sacco nu a primit doar sancțiuni morale morale, ci a fost inundată cu mii de amenințări cu moartea,
+                jigniri ad hominem legate de aspectul fizic și violență verbală extremă. Efectul de dezinhibiție
+                digitală a transformat utilizatorii într-o masă agresivă care nu mai taxa ideea, ci dorea distrugerea
+                completă a omului. Nivelul de cortisol și stresul extrem i-au devalizat sănătatea și cariera,
+                exemplificând prăbușirea violentă de pe „sârma digitală” sub greutatea urii colective.
+            </p>
+
+            <div class="subtitle">Ce putem învăța?
+                <p>
+                    • Mediul online transformă rapid critica justificată într-un atac la persoană disproporționat.<br>
+                    • Efectul de dezinhibiție digitală îi face pe oameni să își piardă empatia în spatele ecranelor.<br>
+                    • Impactul psihologic și biologic al hărțuirii digitale are consecințe severe în viața reală.<br>
+                </p>
+            </div>
+            <h6>Experimentul Riot Games</h6>
+            <p>Compania de jocuri video Riot Games s-a confruntat cu un nivel masiv de toxicitate în chat-ul jocului
+                League of Legends. Pentru a rezolva problema, au implementat un sistem bazat pe inteligență artificială
+                și procesarea limbajului natural (NLP), antrenat să detecteze lexic injurios, agresiuni verbale și
+                treceri de la strategia de joc la atacuri ad hominem.
+                <br>
+                În loc să aplice doar pedepse oarbe, algoritmul trimitea automat „carduri de reformă” care le arătau
+                utilizatorilor exact cuvintele toxice folosite și contextul lor agresiv. Rezultatele au confirmat
+                studiul Stanford: mulți nu erau „troli” nativi, ci aveau doar o zi proastă. Prin forțarea unei
+                autoreflecții (activând cortexul prefrontal), peste 70% dintre jucătorii avertizați și-au corectat
+                definitiv limbajul, demonstrând că tehnologia poate ajuta la menținerea echilibrului prin feedback
+                corect structurat.
+            </p>
+            <div class="subtitle">Ce putem învăța?
+                <p>
+                    • Algoritmii NLP pot diferenția eficient între frustrarea competitivă și atacul la persoană.<br>
+                    • Conștientizarea comportamentului toxic de către utilizator scade radical recidiva.<br>
+                    • Contextul și instrumentele digitale pot modela comportamentul uman în direcții constructive.
+                </p>
+            </div>
+
+            <h6>Cazul Delfi AS contra Estoniei (CEDO, 2015)</h6>
+            <p>Delfi, unul dintre cele mai mari portaluri de știri din Estonia, a publicat un articol legitim despre o
+                companie de transport. Articolul a atras sute de comentarii anonime extrem de agresive, care depășeau cu
+                mult libertatea de exprimare: amenințări cu moartea și insulte grave aduse directorului companiei,
+                complet desprinse de subiectul articolului.
+
+                Cazul a ajuns la Curtea Europeană a Drepturilor Omului (CEDO). Instanța a decis că, deși libertatea de
+                exprimare protejează ideile care jignesc sau șochează, comentariile de pe Delfi reprezentau un discurs
+                instigator la ură și calomnie pură, menit doar să distrugă reputația unei persoane. Portalul a fost
+                considerat responsabil legal. Această decizie istorică a stabilit clar în jurisprudența europeană că
+                spațiul online nu este un teritoriu fără legi, iar demnitatea umană primează în fața insultei gratuite.
+            </p>
+            <div class="subtitle">Ce putem învăța?
+                <p>
+                    • Dreptul la liberă exprimare nu acoperă insultele gratuite și atacurile coordonate la persoană.<br>
+                    • Platformele și site-urile poartă o responsabilitate legală și morală pentru moderarea urii din
+                    comentarii.<br>
+                    • Platformele și site-urile poartă o responsabilitate legală și morală pentru moderarea urii din
+                    comentarii.
+                </p>
+            </div>
+        </div>
+        <div class="content">
+            <p><b>Cheng, J., Bernstein, M., Danescu-Niculescu-Mizil, C., & Leskovec, J.</b> (2017). Anyone Can Become a
+                Troll: Causes of Trolling Behavior in Online Communities. <i>-Proceedings of the 2017 ACM Conference on
+                    Computer Supported Cooperative Work and Social Computing (CSCW).</i><br>
+                <br>
+                <b>Curtea Europeană a Drepturilor Omului (CEDO)</b>. Ghid privind Articolul 10 din Convenția Europeană a
+                Drepturilor Omului - Libertatea de exprimare. Disponibil pe echr.coe.int.<br>
+                <br>
+                <b>Pew Research Center.</b> (2021). Online Harassment: Trends and Personal Experiences. Pew Research
+                Reports.<br>
+                <br>
+                <b>Suler, J. </b>(2004). The Online Disinhibition Effect. CyberPsychology & Behavior, 7(3), 321-326.
+            </p>
+        </div>
+    </section>
+    <script>
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("tab-btn")) {
+                const clickedBtn = e.target;
+                const section = clickedBtn.closest(".tab-section");
+
+                const allButtons = section.querySelectorAll(".tab-btn");
+                const allContents = section.querySelectorAll(".content");
+
+                const index = Array.from(allButtons).indexOf(clickedBtn);
+
+                allButtons.forEach(btn => btn.classList.remove("active"));
+                allContents.forEach(content => content.classList.remove("active"));
+
+                clickedBtn.classList.add("active");
+                allContents[index].classList.add("active");
+            }
+        });
+    </script>
+    <script>
+        function updateTimelineProportional() {
+            const steps = document.querySelectorAll('.timeline-step');
+            const progressLine = document.getElementById('timelineProgress');
+            const timelineNav = document.querySelector('.timeline-nav');
+
+            if (!steps.length) return;
+
+            const totalScrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const currentScroll = window.scrollY;
+
+            const MIN_DISTANCE = 80;
+            let lastTopPosition = 0;
+
+            steps.forEach((step, index) => {
+                const sectionClass = step.getAttribute('data-section');
+                const sectionElement = document.querySelector('.' + sectionClass);
+
+                if (sectionElement) {
+                    const sectionTopInPage = sectionElement.offsetTop;
+                    let ratio = sectionTopInPage / totalScrollableHeight;
+                    if (ratio > 1) ratio = 1;
+
+                    let calculatedTop = ratio * 800;
+
+                    if (index > 0) {
+                        if (calculatedTop < lastTopPosition + MIN_DISTANCE) {
+                            calculatedTop = lastTopPosition + MIN_DISTANCE;
+                        }
+                    }
+
+                    step.style.top = `${calculatedTop}px`;
+
+                    lastTopPosition = calculatedTop;
+                }
+            });
+
+            const timelineLineBg = document.querySelector('.timeline-line-bg');
+            if (timelineLineBg) {
+                timelineLineBg.style.height = `${lastTopPosition}px`;
+            }
+
+            if (progressLine) {
+                const scrollPercent = (currentScroll / totalScrollableHeight);
+                progressLine.style.height = `${scrollPercent * lastTopPosition}px`;
+            }
+
+            let currentSection = "";
+            let activeStepElement = null;
+
+            steps.forEach((step) => {
+                const sectionClass = step.getAttribute('data-section');
+                const sectionElement = document.querySelector('.' + sectionClass);
+
+                if (sectionElement) {
+                    const rect = sectionElement.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight / 4) {
+                        currentSection = sectionClass;
+                        activeStepElement = step;
+                    }
+                }
+            });
+
+            steps.forEach((step) => {
+                if (step.getAttribute('data-section') === currentSection) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+
+            if (activeStepElement && timelineNav) {
+                const stepTop = activeStepElement.offsetTop;
+                const navHeight = timelineNav.clientHeight;
+                timelineNav.scrollTop = stepTop - (navHeight / 2);
+            }
+        }
+
+        window.addEventListener('scroll', updateTimelineProportional);
+        window.addEventListener('resize', updateTimelineProportional);
+        window.addEventListener('DOMContentLoaded', updateTimelineProportional);
+    </script>
+
+
+
+    <script>const commentsDatabase = [
+            { text: "Ideea din text este interesantă, dar cred că argumentul de la pagina 2 are nevoie de mai multe date statistice.", type: "constructive" },
+            { text: "Ești complet incompetent, cine te-a angajat pe tine să scrii mizeria asta de articol?!", type: "attack" },
+            { text: "Codul funcționează destul de lent. Îți sugerez să folosești o funcție asincronă pentru optimizare.", type: "constructive" },
+            { text: "Uită-te cum arăți în clipul ăsta, zici că ai fost călcat de tren. Șterge-te de pe net!", type: "attack" },
+            { text: "Apreciez efortul, dar stilul de redactare este puțin prea tehnic pentru publicul larg. Poate poți simplifica introducerea.", type: "constructive" },
+            { text: "Normal că ai părerea asta proastă, la ce religie/etnie ai, nici nu mă mir.", type: "attack" },
+            { text: "O analiză excelentă. Ar fi fost util dacă adăugai și perspectiva legislativă din România, nu doar pe cea europeană.", type: "constructive" },
+            { text: "Ești doar un troll plătit ca să împrăștii minciuni în spațiul public!", type: "attack" }
+        ];
+
+        let score = 0;
+        let progress = 0;
+        let tiltAngle = 0;
+        let stepsTaken = 0;
+        const tiltStep = 15;
+        const maxTilt = 45;
+        let currentCommentIndex = 0;
+        let gamePool = [];
+
+        const commentTextEl = document.getElementById("comment-text");
+        const progressEl = document.getElementById("progress");
+        const tiltDisplayEl = document.getElementById("tilt-display");
+        const scoreEl = document.getElementById("score");
+
+        const charSideEl = document.getElementById("char-side");
+        const charBackEl = document.getElementById("char-back");
+        const ropeBackEl = document.getElementById("rope-back");
+
+        const overlayEl = document.getElementById("overlay");
+        const overlayTitleEl = document.getElementById("overlay-title");
+        const overlayTextEl = document.getElementById("overlay-text");
+
+        function startGame() {
+            score = 0;
+            progress = 0;
+            stepsTaken = 0;
+            currentCommentIndex = 0;
+            tiltAngle = 0;
+
+            gamePool = [...commentsDatabase].sort(() => Math.random() - 0.5);
+
+            scoreEl.textContent = score;
+            progressEl.textContent = progress;
+
+            charSideEl.style.left = "0%";
+            charSideEl.classList.remove("walking");
+            ropeBackEl.classList.remove("moving");
+
+            updateVisuals();
+            overlayEl.classList.add("hidden");
+            showNextComment();
+        }
+
+        function updateVisuals() {
+            charBackEl.style.transform = `rotate(${tiltAngle}deg) translateX(-50%)`;
+            tiltDisplayEl.textContent = `${Math.abs(tiltAngle)}° ${tiltAngle > 0 ? 'Dreapta' : tiltAngle < 0 ? 'Stânga' : '(Perfect)'}`;
+
+            const visualLeft = (progress / 100) * 90;
+            charSideEl.style.left = `${visualLeft}%`;
+        }
+
+        function showNextComment() {
+            if (currentCommentIndex >= gamePool.length) {
+                endGame(true);
+                return;
+            }
+            commentTextEl.textContent = gamePool[currentCommentIndex].text;
+        }
+
+        function handleAnswer(userChoice) {
+            const currentComment = gamePool[currentCommentIndex];
+            const isCorrect = (userChoice === currentComment.type);
+
+            if (isCorrect) {
+                score += 10;
+                scoreEl.textContent = score;
+                stepsTaken++;
+
+                if (tiltAngle > 0) {
+                    tiltAngle = Math.max(0, tiltAngle - tiltStep);
+                } else if (tiltAngle < 0) {
+                    tiltAngle = Math.min(0, tiltAngle + tiltStep);
+                }
+
+                progress = Math.round((stepsTaken / gamePool.length) * 100);
+                progressEl.textContent = progress;
+
+                charSideEl.classList.add("walking");
+                ropeBackEl.classList.add("moving");
+
+                setTimeout(() => {
+                    charSideEl.classList.remove("walking");
+                    ropeBackEl.classList.remove("moving");
+                }, 400);
+
+            } else {
+                if (tiltAngle > 0) {
+                    tiltAngle += tiltStep;
+                } else if (tiltAngle < 0) {
+                    tiltAngle -= tiltStep;
+                } else {
+                    tiltAngle = (userChoice === "constructive") ? -tiltStep : tiltStep;
+                }
+            }
+
+            updateVisuals();
+
+            if (Math.abs(tiltAngle) >= maxTilt) {
+                charBackEl.style.transform = `rotate(${tiltAngle > 0 ? 90 : -90}deg) translateY(60px)`;
+                setTimeout(() => endGame(false), 400);
+                return;
+            }
+
+            if (progress >= 100 || currentCommentIndex === gamePool.length - 1 && isCorrect) {
+                setTimeout(() => endGame(true), 400);
+                return;
+            }
+
+            currentCommentIndex++;
+            setTimeout(showNextComment, 400);
+        }
+
+        function endGame(isVictory) {
+            overlayEl.classList.remove("hidden");
+
+            if (isVictory) {
+                progressEl.textContent = 100;
+                charSideEl.style.left = "92%";
+                overlayTitleEl.textContent = "Misiune Îndeplinită! 🏁🏆";
+                overlayTextEl.textContent = `Ai parcurs toată sârma în siguranță, ajungând la capăt. Scor final: ${score} puncte.`;
+            } else {
+                overlayTitleEl.textContent = "Prăbușire!";
+                overlayTextEl.textContent = `Acrobatul a picat din cauza dezechilibrului. Ai avansat doar ${progress}% pe lungimea sârmei.`;
+            }
+        }
+
+        document.getElementById("btn-constructive").addEventListener("click", () => handleAnswer("constructive"));
+        document.getElementById("btn-attack").addEventListener("click", () => handleAnswer("attack"));
+        document.getElementById("btn-restart").addEventListener("click", startGame);
+
+        window.onload = startGame;</script>
+</body>
+
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2beSMART</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="style2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
+</head>
+
+<body>
+    <section class="header">
+        <nav>
+            <a href="index.html"><img src="images/logo2.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">Acasă</a></li>
+                    <li><a href="info.html">Resurse</a></li>
+                    <li><a href="simulare.html">Simulator</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <div class="text-box">
+            <br>
+            <h1>Simulare</h1>
+            <p>Intră în contact cu adevărul digital</p>
+
+        </div>
+
+        <svg class="wave wave1" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#f60984"
+                d="M0,160L80,170C160,180,320,200,480,192C640,184,800,148,960,149C1120,150,1280,190,1440,170L1440,320L0,320Z">
+            </path>
+        </svg>
+
+        <svg class="wave wave2" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#b103ab"
+                d="M0,224L80,208C160,192,320,160,480,144C640,128,800,128,960,149C1120,170,1280,214,1440,208L1440,320L0,320Z">
+            </path>
+        </svg>
+
+        <svg class="wave wave3" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#620186"
+                d="M0,96L90,112C180,128,360,160,540,165C720,170,900,149,1080,133C1260,117,1380,107,1440,101L1440,320L0,320Z">
+            </path>
+        </svg>
+
+        <svg class="wave wave4" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#2c0271"
+                d="M0,170L70,176C140,182,280,192,420,170C560,149,700,96,840,96C980,96,1120,149,1260,165C1400,181,1540,160,1440,160L1440,320L0,320Z">
+            </path>
+        </svg>
+
+        <svg class="wave wave5" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#080149"
+                d="M0,128L120,122C240,117,480,107,720,133C960,160,1200,224,1320,256L1440,288L1440,320L0,320Z">
+            </path>
+        </svg>
+    </section>
+    <section class="container">
+
+        <section class="consola">
+            <h2>Simulator de propagare a unei informați într-o rețea socială</h2>
+
+            <p>Introduceți numărul de persoane din rețea (de preferat >=500) și numărul de pași pe care îi doriți ca
+                algoritmul să îi facă:</p>
+
+            <br>
+            <div class="row">
+                <input type="text" id="input1" placeholder="Numărul de persoane">
+                <input type="text" id="input2" placeholder="Numărul de întâlniri">
+                <select id="chartType">
+                    <option value="pie">Circular</option>
+                    <option value="doughnut">Inelar</option>
+                    <option value="bar">Bare</option>
+                </select>
+            </div>
+            <br>
+            <button onclick="run()">Rulează</button>
+        </section>
+
+        <section class="afisare">
+            <div class="row2">
+
+                <pre id="output"></pre>
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <div class="chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <div class="chart">
+                    <canvas id="timeChart"></canvas>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="interpretare">
+
+            <h2>Cum interpretăm datele obținute?</h2>
+            <br>
+            <h3>Secțiunea input</h3>
+            <br>
+            <p>Primul număr introdus reprezintă numărul de persoane din rețea.
+                <br>
+                Al doilea număr introdus reprezintă numărul de inâștniri pe care îi are la dispoziție informația pentru
+                a se
+                răspândi printre populație.
+                O întalnire este reprezentată de o interacțiune dintre un indivit și prietenii lui.
+                <br>
+                Dacă numărul de întâlniri depășește valoarea necesară pentru ca informația să se răspândească în
+                întreaga
+                rețea, diferența este interpretată ca numărul de zile până la momentul interogării, perioadă în care
+                informația suferă degradări.
+                <br>
+                <br>
+            </p>
+            <h3>Secțiunea output</h3>
+            <br>
+            <p>
+                Primul număr reprezintă numărul de persoane care nu au aflat informația.
+                <br>
+                Al doilea număr reprezintă numărul de persoane care au avut concact cu informația.
+                <br>
+                Al treilea număr caracterizează câți oameni au reținut informația greșit.
+                <br>
+                Al patrulea număr indică pasul la care un număr maxim de persoane au alfat pentru prima dată informația
+                din
+                rețea.
+            </p>
+
+        </section>
+
+
+        <!--quiz-->
+
+        <div class="containertest">
+            <h2>Generator de quiz</h2>
+
+            <div id="setup-screen">
+                <p>Introdu textul din care dorești să generezi cele 10 întrebări:</p>
+                <br>
+                <textarea class="textareacons" id="source-text"
+                    placeholder="Exemplu: Mihai Eminescu a fost un poet, prozator și jurnalist român..."></textarea>
+                <br>
+                <button id="start-btn" onclick="generateQuiz()">Generează Quiz</button>
+            </div>
+
+            <div id="loading-screen" class="hidden">
+                <br>
+                <p> Se analizează textul pentru creearea întrebărilor și formularea explicațiilor... Te rugăm să
+                    aștepți.
+                </p>
+                <br>
+            </div>
+
+            <div id="quiz-screen" class="hidden">
+                <div class="progress-bar">Întrebarea <span id="current-index-txt">1</span> din <span
+                        id="total-txt">10</span></div>
+
+                <div class="question-card">
+                    <p id="question-text">Aici va apărea întrebarea...</p>
+
+                    <div class="options-container">
+                        <button class="btn-option btn-true" id="btn-true" onclick="selectAnswer(true)">Adevărat</button>
+                        <button class="btn-option btn-false" id="btn-false" onclick="selectAnswer(false)">Fals</button>
+                    </div>
+                </div>
+
+                <div id="explanation-container" class="explanation-box hidden">
+                    <p id="feedback-text"><strong>Răspuns:</strong> </p>
+                    <p id="explanation-text"></p>
+                </div>
+
+                <button id="check-btn" class="btn-action" onclick="checkCurrentAnswer()" disabled>Verifică
+                    răspunsul</button>
+                <button id="next-btn" class="btn-action hidden" onclick="nextQuestion()">Următoarea întrebare</button>
+            </div>
+
+            <div id="result-screen" class="hidden">
+                <div id="result"></div>
+                <button onclick="restartQuiz()">Încearcă din nou</button>
+            </div>
+        </div>
+        <br>
+        <br>
+    </section>
+
+    <script>
+        let quizData = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let isChecked = false;
+
+        async function generateQuiz() {
+            const text = document.getElementById('source-text').value;
+            if (!text.trim()) {
+                alert("Te rog să introduci un text mai întâi!");
+                return;
+            }
+
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('loading-screen').classList.remove('hidden');
+
+            try {
+                quizData = await fetchAIQuestions(text);
+
+                currentQuestionIndex = 0;
+                userAnswers = {};
+
+                document.getElementById('loading-screen').classList.add('hidden');
+                document.getElementById('quiz-screen').classList.remove('hidden');
+
+                showCurrentQuestion();
+            } catch (error) {
+                alert("Eroare la generare.");
+                restartQuiz();
+            }
+        }
+        async function fetchAIQuestions(inputText) {
+
+            const BACKEND_URL = "http://localhost:3000/generate-quiz";
+
+            const response = await fetch(BACKEND_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: inputText })
+            });
+
+            if (!response.ok) {
+                throw new Error("Serverul a răspuns cu o eroare.");
+            }
+
+            const data = await response.json();
+            return data;
+        }
+
+        function showCurrentQuestion() {
+            isChecked = false;
+            const currentQuestion = quizData[currentQuestionIndex];
+
+            document.getElementById('current-index-txt').innerText = currentQuestionIndex + 1;
+            document.getElementById('total-txt').innerText = quizData.length;
+            document.getElementById('question-text').innerText = currentQuestion.text;
+
+            const btnTrue = document.getElementById('btn-true');
+            const btnFalse = document.getElementById('btn-false');
+            btnTrue.classList.remove('selected');
+            btnFalse.classList.remove('selected');
+            btnTrue.disabled = false;
+            btnFalse.disabled = false;
+
+            document.getElementById('explanation-container').className = 'explanation-box hidden';
+
+            document.getElementById('check-btn').classList.remove('hidden');
+            document.getElementById('check-btn').disabled = true;
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function selectAnswer(value) {
+            if (isChecked) return;
+
+            const currentQuestion = quizData[currentQuestionIndex];
+            userAnswers[currentQuestion.id] = value;
+
+            document.getElementById('btn-true').classList.remove('selected');
+            document.getElementById('btn-false').classList.remove('selected');
+
+            if (value === true) {
+                document.getElementById('btn-true').classList.add('selected');
+            } else {
+                document.getElementById('btn-false').classList.add('selected');
+            }
+
+            document.getElementById('check-btn').disabled = false;
+        }
+
+        function checkCurrentAnswer() {
+            isChecked = true;
+            const currentQuestion = quizData[currentQuestionIndex];
+            const userAnswer = userAnswers[currentQuestion.id];
+            const isCorrect = (userAnswer === currentQuestion.correct);
+
+            document.getElementById('btn-true').disabled = true;
+            document.getElementById('btn-false').disabled = true;
+
+            const expContainer = document.getElementById('explanation-container');
+            const feedbackTxt = document.getElementById('feedback-text');
+            const explanationTxt = document.getElementById('explanation-text');
+
+            expContainer.classList.remove('hidden');
+
+            if (isCorrect) {
+                expContainer.className = "explanation-box correct-feedback";
+                feedbackTxt.innerHTML = `<strong>Corect!</strong> Răspunsul corect este într-adevăr <strong>${currentQuestion.correct ? 'Adevărat' : 'Fals'}</strong>.`;
+            } else {
+                expContainer.className = "explanation-box wrong-feedback";
+                feedbackTxt.innerHTML = `<strong>Greșit!</strong> Răspunsul corect era <strong>${currentQuestion.correct ? 'Adevărat' : 'Fals'}</strong>.`;
+            }
+
+            explanationTxt.innerText = currentQuestion.explicatie;
+
+            document.getElementById('check-btn').classList.add('hidden');
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.classList.remove('hidden');
+
+            if (currentQuestionIndex === quizData.length - 1) {
+                nextBtn.innerText = "Vezi Rezultatul Final";
+            } else {
+                nextBtn.innerText = "Următoarea întrebare";
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                showCurrentQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            let score = 0;
+            quizData.forEach(q => {
+                if (userAnswers[q.id] === q.correct) {
+                    score++;
+                }
+            });
+
+            const percentage = (score / quizData.length) * 100;
+            document.getElementById('result').innerHTML = `Test finalizat!<br>Scor: ${score} din ${quizData.length} corecte (${percentage}%)`;
+        }
+
+        function restartQuiz() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('setup-screen').classList.remove('hidden');
+            document.getElementById('source-text').value = "";
+        }
+    </script>
+
+    <script>
+        window.addEventListener('scroll', function () {
+            const scrollPosition = window.scrollY;
+            const waves = document.querySelectorAll('.wave');
+            const container = document.querySelector('.container');
+
+            waves.forEach(wave => {
+                wave.style.transform = `translateY(-${scrollPosition * 1.2}px)`;
+            });
+            if (container) {
+                let containerMove = (scrollPosition) * 0.8;
+                container.style.marginTop = `-${containerMove}px`;
+
+
+            }
+        });
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        async function run() {
+
+            const input1 = document.getElementById("input1").value;
+            const input2 = document.getElementById("input2").value;
+
+            const res = await fetch("http://localhost:3000/run", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    script: `#include <bits/stdc++.h>
+
+using namespace std;
+
+enum State {Susceptibil, Infectat, Recuperat};
+
+int main()
+{
+    int N, T, poz;
+    double base_p = 0.1;
+    double gamma = 0.05;
+    double base_delta = 0.05;
+    double fake_limit = 0.60;
+
+    cin >> N >> T;
+
+    vector<vector<int>> graf(N);
+    vector<State> stare(N);
+    vector<double> calitate(N);
+    vector<int> infectati;
+    int q=rand();
+    mt19937 val(43*q);
+    uniform_real_distribution<double> dist(0.0, 1.0);
+
+    for(int i = 0; i < N; i++)
+        graf[i].clear();
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            if (i != j && graf[i].size() < 70 && dist(val) < 0.02)
+            {
+                graf[i].push_back(j);
+                if(!poz) poz = i;
+            }
+
+    for (int i = 0; i < N; i++)
+    {
+        stare[i] = Susceptibil;
+        calitate[i] = 2.0;
+    }
+    stare[poz] = Infectat;
+    calitate[poz] = 1.0;
+    int bad_influencer = rand() % N;
+    int max_new = 0, t_max = 0;
+    int total = N;
+    for (int t = 0; t < T; t++)
+    {
+        vector<State> new_stare = stare;
+        vector<double> new_calitate = calitate;
+        int new_infected_this_step = 0;
+        int k=100;
+        for (int i = 0; i < N and k; i++)
+        {
+            if (stare[i] == Infectat)
+            {
+                double time_decay = 1.0 - 0.7*(double)t / T;
+                if (dist(val) < gamma)
+                    new_stare[i] = Recuperat;
+                else
+                    for (int j : graf[i])
+                        if (stare[j] == Susceptibil)
+                        {
+                            k--;
+                            double degree_factor = 1.0 / (1.0 + graf[i].size());
+                            double p = base_p * (1.0 + degree_factor) * time_decay;
+                            if (dist(val) < p)
+                            {
+                                new_stare[j] = Infectat;
+                                new_infected_this_step++;
+                                double new_q = calitate[i] * (1.0 - base_delta);
+                                if (i == bad_influencer)
+                                    new_q -= 0.2;
+                                new_calitate[j] = max(0.0, new_q);
+                            }
+                            if(!k)
+                                break;
+                        }
+            }
+        }
+        if (new_infected_this_step > max_new)
+        {
+            max_new = new_infected_this_step;
+            t_max = t;
+        }
+        if(t<120 and total)
+            infectati.push_back(new_infected_this_step);
+        total -= new_infected_this_step;
+        stare = new_stare;
+        calitate = new_calitate;
+    }
+
+    for(int i = 0; i < N; i++)
+        if(stare[i] == Recuperat && dist(val) < 0.3)
+        {
+            stare[i] = Infectat;
+            calitate[i] *= 0.7;
+        }
+
+    int S = 0, I = 0, R = 0;
+    int fake_count = 0;
+
+    for (int i = 0; i < N; i++)
+    {
+        if (stare[i] == Susceptibil) S++;
+        else if (stare[i] == Infectat) I++;
+        else if (stare[i] == Recuperat) R++;
+        if (calitate[i] < fake_limit && stare[i] != Susceptibil) fake_count++;
+    }
+
+    cout << S << " persoane nu au aflat informatia"<<endl;
+    cout << N-S << " au aflat informatia"<<endl;
+    cout << "Informatia a ajuns fals la " << fake_count << " persoane"<<endl;
+    cout << "Momentul maxim de propagare t = " << t_max << endl;
+
+
+    // Linie specială structurată pentru primul grafic
+    cout << "DATA_STRUCT:" << S << " " << N-S << " " << fake_count << endl;
+
+    cout << "DATA_TIMP:";
+    for(int i = 0; i < infectati.size(); i++)
+    {
+        cout << " " << infectati[i];
+    }
+    cout<<endl;
+
+    return 0;
+}
+
+`,
+                    input: input1 + " " + input2
+                })
+            });
+
+            const data = await res.json();
+            const rawOutput = data.output;
+
+            let curatOutput = "";
+            let dateTimpArray = [];
+            let S = 0, I = 0, fake = 0;
+
+            const linii = rawOutput.split('\n');
+            linii.forEach(linie => {
+                if (linie.startsWith("DATA_TIMP:")) {
+                    dateTimpArray = linie.replace("DATA_TIMP:", "").trim().split(" ").map(Number);
+                } else if (linie.startsWith("DATA_STRUCT:")) {
+                    const valori = linie.replace("DATA_STRUCT:", "").trim().split(" ").map(Number);
+                    S = valori[0];
+                    I = valori[1];
+                    fake = valori[2];
+                } else {
+                    curatOutput += linie + "\n";
+                }
+            });
+
+            document.getElementById("output").innerText = curatOutput.trim();
+            const type = document.getElementById("chartType").value;
+
+            if (window.chart1) window.chart1.destroy();
+            if (window.chart2) window.chart2.destroy();
+
+            const ctx1 = document.getElementById('myChart');
+            window.chart1 = new Chart(ctx1, {
+                type: type,
+                data: {
+                    labels: ['Susceptibili', 'Infectați', 'Dețin informația falsă'],
+                    datasets: [{
+                        label: "Distribuția populației",
+                        data: [S, I, fake],
+                        backgroundColor: ['#3498db', '#e74c3c', '#f1c40f']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    ...(type === 'bar' ? { scales: { y: { beginAtZero: true } } } : {})
+                }
+            });
+
+            const labelsAxaX = dateTimpArray.map((_, index) => `Pas ${index}`);
+            const ctx2 = document.getElementById('timeChart');
+            window.chart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labelsAxaX,
+                    datasets: [{
+                        label: 'Număr persoane infectate',
+                        data: dateTimpArray,
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        fill: true,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Persoane' } },
+                        x: { title: { display: true, text: 'Timp (Pași)' } }
+                    }
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        var navLinks = document.getElementById("navLinks");
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+    </script>
+
+
+
+</body>
+
+</html>
