@@ -10,15 +10,15 @@ const app = express();
 
 app.use(express.json());
 const allowedOrigins = [
-    "http://localhost:3000" ,
-    "http://127.0.0.1:5500" ,
-    "https://2besmart.netlify.app"                 
+    "http://localhost:3000",
+    "http://127.0.0.1:5500",
+    "https://2besmart.netlify.app"
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin) return callback(null, true);
-        
+
         if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
@@ -72,34 +72,44 @@ app.post("/run", async (req, res) => {
     }
 });
 
+
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp-relay.brevo.com",
+    port: 587,
+    secure: false,
     auth: {
-        user: "2besmart.contact@gmail.com",
-        pass: process.env.EMAIL_PASS
+        user: process.env.BREVO_USER,
+        pass: process.env.BREVO_PASS
     }
 });
 
-app.post("/send-email", async (req, res) => {
-    const { name, fromEmail, subject, message } = req.body;
+app.post('/send-email', (req, res) => {
+    const { name, email, subject, message } = req.body;
 
     const mailOptions = {
-        from: `"${name}" <${fromEmail}>`,
+        from: '"2beSMART" <2besmart.contact@gmail.com>',
+        replyTo: email,
         to: "2besmart.contact@gmail.com",
-        subject: subject,
-        text: `Nume expeditor: ${name}\nEmail expeditor: ${fromEmail}\n\nMesaj:\n${message}`
+        subject,
+        text: `Nume: ${name}
+Email: ${email}
+Mesaj:
+${message}`
     };
 
-    try {
-        await transporter.sendMail(mailOptions);
-        res.json({ success: true });
-    } catch (error) {
-        console.error(error);
-        res.json({ success: false });
-    }
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error("SEND MAIL ERROR:");
+            console.error(error);
+            console.error(error.code);
+            console.error(error.response);
+            return res.status(500).json({ status: 'error', message: 'Ceva nu a mers bine la trimitere.' });
+        }
+        console.log('Email trimis: ' + info.response);
+        res.status(200).json({ status: 'success', message: 'Email-ul a fost trimis cu succes!' });
+    });
 });
 
-//Generator Quiz cu AI
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const systemPrompt = `Ești un generator de quiz-uri. Îți voi da un text.  Sarcina ta este să citești cu atenție textul și să generezi exact 10 propoziții distincte pe baza lui.
 Urmează cu strictețe aceste reguli:
