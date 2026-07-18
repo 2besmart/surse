@@ -1,6 +1,22 @@
+*{
+     margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+:root {
+    --bg-main: #080149;
+    --text-color: #f5f5f5;
+}
+body.dark-theme {
+    --bg-main: #f9f5ff;
+    --text-color: #202123;
+}
+
 body {
-    background: #080149;
-    font-family: Poppins;
+    background: var(--bg-main);
 }
 .header-fix {
     position: fixed;
@@ -8,7 +24,7 @@ body {
     left: 0;
     width: 100%;      
     height: 80px;
-    background-color: #080149;
+    background-color: var(--bg-main);
     display: flex;
     justify-content: space-between;
     align-items: center;   
@@ -25,6 +41,10 @@ body {
     background-color: #f60984;
     transition: background 0.3s ease; 
     flex-shrink: 0;
+}
+.buton-centru
+{
+    color: #f5f5f5;
 }
 
 .linie-sageata {
@@ -61,7 +81,7 @@ body {
 }
 
 .tab-section {
-    margin: 50px 0;
+    margin: 50px 0 50px 75px;
     display: block;
 }
 
@@ -76,7 +96,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 100px;
-    color: #f5f5f5;
+    color: var(--text-color);
 }
 
 
@@ -85,7 +105,6 @@ body {
 }
 
 .tabs {
-    margin-left: 75px;
     display: flex;
     gap: 0px;
     margin-bottom: 0;
@@ -126,13 +145,12 @@ button {
 
 .content {
     width: 80%;
-    display: none;
     background: white;
     padding: 30px;
     min-height: 250px;
     border-radius: 0 10px 10px 10px;
     border: 2px solid #154360;
-    margin-left: 75px;
+    display: none;
 }
 
 .content.active {
@@ -192,12 +210,11 @@ button {
 
 .timeline-nav {
     position: fixed;
-    right: 3%;
+    right: 2%;
     top: 12%;   
-    bottom: 5%; 
+    bottom: 15%; 
     width: 150px;
     z-index: 100;
-    font-family: 'Poppins', sans-serif;
     overflow-y: scroll;
     overflow-x: hidden;
     scroll-behavior: smooth;
@@ -234,7 +251,7 @@ button {
 }
 
 .timeline-step .step-text {
-    color: #f5f5f5;
+    color: var(--text-color);
     font-size: 14px;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -274,14 +291,16 @@ button {
     .timeline-nav{
         display: none;
     }
-    .content, .content{
+    .content{
         width: 100%;
+        padding: 30px 0;
         margin: 0;
-        padding: 5px;
+    }
+    .content.active{
+        width: 100%;
     }
     .tab-section{
         width: 90%;
-        position: relative;
         margin-left: auto;
         margin-right: auto;
     }
@@ -309,15 +328,85 @@ button {
     .buton i{
         display: inline;
         font-size: 25px;
+        color: var(--text-color);
     }
     .buton span{
         display: none;
     }
     .buton-centru{
-        background: #080149;
+        background: none;
         padding: 0;
     }
     .linie-sageata{
         display: none;
+    }
+}
+
+
+
+
+.site-footer {
+    position: relative;
+    background-color: #080149;
+    color: #f5f5f5;
+    padding: 30px 0;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.site-footer img {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+}
+
+.footer-content {
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-content p {
+    font-size: 16px;
+}
+
+.theme-btn {
+    background-color: #f60984;
+    color: #f5f5f5;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.theme-btn:hover {
+    background-color: #b103ab;
+    transform: scale(1.05);
+}
+
+@media (max-width:700px)
+{
+    .footer-content{
+        flex-direction: column;
+        width: 90%;
+    }
+    .site-footer img{
+        margin-top: 50px;
+    }
+    .theme-btn{
+        margin-top: 40px;
     }
 }

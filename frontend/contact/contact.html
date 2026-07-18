@@ -9,14 +9,17 @@
     <link rel="stylesheet" href="style3.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.0/css/all.min.css">
 
 </head>
 
 <body>
     <section class="header">
         <nav>
-            <a href="index.html"><img src="images/logo2.png"></a>
+            <a href="index.html"><img id="header-logo" src="images/logo2.png" alt="Logo"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fa fa-times" onclick="hideMenu()"></i>
                 <ul>
@@ -29,9 +32,8 @@
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
 
-        <br>
-        <br>
         <div class="text-box">
+            <br>
             <h1>Contactați-ne</h1>
         </div>
 
@@ -73,7 +75,7 @@
                 <form id="contactForm">
                     <input type="text" id="name" placeholder="Numele" required>
                     <input type="email" id="email" placeholder="Email" required>
-                    <input stype="text" id="subject" placeholder="Subiectul" required>
+                    <input type="text" id="subject" placeholder="Subiectul" required>
                     <textarea rows="10" id="message" placeholder="Mesajul" required></textarea>
                     <button type="submit" class="hero-btn-despre">Trimite</button>
                 </form>
@@ -113,25 +115,25 @@
         </div>
         <div class="reach">
 
-            <div class="chenar" style="background-color:rgb(177, 3, 171, 0.8)">
-                <i class="fa fa-home"></i>
+            <div class="chenar" style="background-color:#b103ab">
+                <i class="fa-regular fa-house"></i>
                 <span>
                     <h5>Strada Nicolae Titulescu 106</h5>
                     <p>Târgu Jiu, Romania</p>
                 </span>
             </div>
-            <div class="chenar" style="background-color:rgb(177, 3, 171)">
-                <i class="fa fa-instagram"></i>
+            <div class="chenar" style="background-color:#b103ab">
+                <i class="fa-brands fa-instagram"></i>
                 <span>
                     <h5>2.besmart</h5>
                     <p>Fii la curent cu toate noutățile</p>
                 </span>
             </div>
-            <div class="chenar" style="background-color:rgb(177, 3, 171, 0.6)">
-                <i class="fa fa-envelope"></i>
+            <div class="chenar" style="background-color:#b103ab">
+                <i class="fa-regular fa-envelope"></i>
                 <span>
                     <h5>2besmart.contact@gmail.com</h5>
-                    <p>Contactați-ne pentru orice întrebare</p>
+                    <p>Contactează-ne pentru orice întrebare</p>
                 </span>
             </div>
         </div>
@@ -143,7 +145,15 @@
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
-
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>Colegiul Național „Spiru Haret ” Târgu Jiu, 2026</p>
+            <img src="images/logo2.png">
+            <button id="theme-toggle" class="theme-btn">
+                <i class="fa-solid fa-moon"></i> Schimbă Tema
+            </button>
+        </div>
+    </footer>
     <script>
         const BACKEND_BASE_URL = "https://backend-k5ed.onrender.com";
 
@@ -178,7 +188,6 @@
 
         updateStars(5);
 
-
         document.getElementById("reviewForm").addEventListener("submit", async (e) => {
             e.preventDefault();
 
@@ -187,7 +196,7 @@
             const text = document.getElementById("reviewText").value;
             const messageDiv = document.getElementById("formMessage");
 
-            messageDiv.style.color = "#333";
+            messageDiv.style.color = "#f5f5f5";
             messageDiv.innerText = "Se trimite...";
 
             try {
@@ -223,7 +232,8 @@
             }
         });
 
-        // 4. Formularul de contact
+
+
         const form = document.getElementById('contactForm');
         const statusDiv = document.getElementById('status');
 
@@ -232,7 +242,7 @@
 
             const data = {
                 name: document.getElementById('name').value,
-                fromEmail: document.getElementById('email').value,
+                email: document.getElementById('email').value,
                 subject: document.getElementById('subject').value,
                 message: document.getElementById('message').value
             };
@@ -253,16 +263,16 @@
 
                 const result = await response.json();
 
-                if (result.success) {
+                if (result.status === 'success') {
                     statusDiv.textContent = "Email trimis cu succes!";
                     statusDiv.style.color = "#2ecc71";
                     form.reset();
                 } else {
-                    statusDiv.textContent = "Eroare la trimitere pe server.";
+                    statusDiv.textContent = result.message || "Eroare la trimitere pe server.";
                     statusDiv.style.color = "#e74c3c";
                 }
-            } catch (err) {
-                console.error("Eroare la rețea/server:", err);
+            } catch (error) {
+                console.error("Eroare la rețea/server:", error); 
                 statusDiv.textContent = "Eroare de conexiune la server.";
                 statusDiv.style.color = "#e74c3c";
             }
@@ -273,9 +283,8 @@
             const waves = document.querySelectorAll('.wave');
             const container = document.querySelector('.container');
 
-            // 1. Valurile urcă instant și rapid la scroll pentru a mătura textul
             waves.forEach(wave => {
-                wave.style.transform = `translateY(-${scrollPosition * 1.2}px)`;
+                wave.style.transform = `translateY(-${scrollPosition * 0.8}px)`;
             });
             if (container) {
                 let containerMove = (scrollPosition) * 0.7;
@@ -295,6 +304,36 @@
         }
 
     </script>
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const headerLogo = document.getElementById('header-logo');
+        const savedTheme = localStorage.getItem('theme');
+        const logoDarkTheme = "images/logo2.png";
+        const logoLightTheme = "images/logo_light.png";
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Mod luminos';
+            headerLogo.src = logoLightTheme;
+        }
+        else {
+            headerLogo.src = logoDarkTheme;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Mod luminos';
+                headerLogo.src = logoLightTheme;
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Mod întunecat';
+                headerLogo.src = logoDarkTheme;
+            }
+        });
+    </script>
+
 </body>
 
 </html>

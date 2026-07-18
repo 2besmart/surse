@@ -11,13 +11,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 </head>
 
 <body>
     <section class="header">
         <nav>
-            <a href="index.html"><img src="images/logo2.png"></a>
+            <a href="index.html"><img id="header-logo" src="images/logo2.png" alt="Logo"></a>
             <div class="nav-links" id="navLinks">
                 <i class="fa fa-times" onclick="hideMenu()"></i>
                 <ul>
@@ -31,9 +32,8 @@
         </nav>
         <div class="text-box">
             <br>
-            <h1>Simulare</h1>
+            <h1>Simulator</h1>
             <p>Intră în contact cu adevărul digital</p>
-
         </div>
 
         <svg class="wave wave1" viewBox="0 0 1440 320" preserveAspectRatio="none">
@@ -68,13 +68,50 @@
     </section>
     <section class="container">
 
+        <div class="consola-col">
+            <div class="col1">
+                <h2>De ce am creat acest simulator?</h2>
+                <p>O singură informație poate ajunge la mii de persoane în doar câteva minute. Simulatorul
+                    2beSMART reproduce acest proces folosind modele matematice și teoria grafurilor, permițând
+                    utilizatorilor să urmărească vizual răspândirea informației și schimbările pe care aceasta le poate
+                    suferi pe măsură ce este transmisă în rețea.
+                </p>
+            </div>
+            <div class="col2">
+                <p>Simulatorul modelează fiecare persoană ca un nod al unei rețele sociale.<br>
+                    Informația pornește de la un singur utilizator și este transmisă succesiv către ceilalți.<br>
+                    La fiecare retransmitere există posibilitatea ca mesajul să își piardă o parte din acuratețe.<br>
+                    Procesul continuă până când numărul de întâlniri introdus este epuizat.<br>
+                    Fiecare simulare generează o rețea diferită, astfel încât aceleași date de intrare pot produce
+                    rezultate distincte. Acest comportament reflectă propagarea informației în mediul real, unde traseul
+                    și impactul unui mesaj diferă de la o distribuire la alta.
+                </p>
+
+            </div>
+        </div>
         <section class="consola">
-            <h2>Simulator de propagare a unei informații într-o rețea socială</h2>
-
-            <p>Introduceți numărul de persoane din rețea (de preferat >=500) și numărul de pași pe care îi doriți ca
-                algoritmul să îi facă:</p>
-
-            <br>
+            <div class="arrows-container-in">
+                <div>
+                    <p class="interpretare-in">Primul câmp reprezintă numărul de persoane din rețea, adică dimensiunea
+                        populației în care informația se poate propaga.
+                    <p class="interpretare-in"> Al doilea câmp reprezintă numărul de întâlniri disponibile pentru
+                        răspândirea informației. O întâlnire este considerată o interacțiune dintre o persoană și
+                        contactele
+                        sale din rețea, în cadrul căreia informația poate fi transmisă mai departe.</p>
+                    <p class="interpretare-in">Dacă numărul de întâlniri introdus depășește valoarea necesară pentru ca
+                        informația să ajungă la toate persoanele din rețea, întâlnirile rămase sunt interpretate ca
+                        perioada
+                        scursă după propagarea completă.</p>
+                    <p class="interpretare-in2">În acest interval, informația poate suferi degradări succesive, ceea ce
+                        conduce la scăderea acurateței mesajului inițial.</p>
+                    </p>
+                </div>
+                <div class="a1" style="display: flex;    gap: 40px;    align-items: center;">
+                    <div class="arrow-in"></div>
+                    <div class="arrow-in"></div>
+                    <div class="arrow-in"></div>
+                </div>
+            </div>
             <div class="row">
                 <input type="text" id="input1" placeholder="Numărul de persoane">
                 <input type="text" id="input2" placeholder="Numărul de întâlniri">
@@ -85,7 +122,9 @@
                 </select>
             </div>
             <br>
-            <button onclick="run()">Rulează</button>
+            <div style="text-align: center;">
+                <button onclick="run()">Rulează</button>
+            </div>
         </section>
 
         <section class="afisare">
@@ -106,96 +145,97 @@
             </div>
         </section>
 
-        <section class="interpretare">
-
-            <h2>Cum interpretăm datele obținute?</h2>
-            <br>
-            <h3>Secțiunea input</h3>
-            <br>
-            <p>Primul număr introdus reprezintă numărul de persoane din rețea.
-                <br>
-                Al doilea număr introdus reprezintă numărul de inâștniri pe care îi are la dispoziție informația pentru
-                a se
-                răspândi printre populație.
-                O întalnire este reprezentată de o interacțiune dintre un indivit și prietenii lui.
-                <br>
-                Dacă numărul de întâlniri depășește valoarea necesară pentru ca informația să se răspândească în
-                întreaga
-                rețea, diferența este interpretată ca numărul de zile până la momentul interogării, perioadă în care
-                informația suferă degradări.
-                <br>
-                <br>
-            </p>
-            <h3>Secțiunea output</h3>
-            <br>
-            <p>
-                Primul număr reprezintă numărul de persoane care nu au aflat informația.
-                <br>
-                Al doilea număr reprezintă numărul de persoane care au avut concact cu informația.
-                <br>
-                Al treilea număr caracterizează câți oameni au reținut informația greșit.
-                <br>
-                Al patrulea număr indică pasul la care un număr maxim de persoane au alfat pentru prima dată informația
-                din
-                rețea.
-            </p>
-
-        </section>
-
-
-        <!--quiz-->
-
-        <div class="containertest">
-            <h2>Generator de quiz</h2>
-
-            <div id="setup-screen">
-                <p>Introdu textul din care dorești să generezi cele 10 întrebări:</p>
-                <br>
-                <textarea class="textareacons" id="source-text"
-                    placeholder="Exemplu: Mihai Eminescu a fost un poet, prozator și jurnalist român..."></textarea>
-                <br>
-                <button id="start-btn" onclick="generateQuiz()">Generează Quiz</button>
+        <div class="arrows-container">
+            <div class="a2" style="display: flex;    gap: 40px;    align-items: center;">
+                <div class="arrow"></div>
+                <div class="arrow"></div>
+                <div class="arrow"></div>
             </div>
-
-            <div id="loading-screen" class="hidden">
-                <br>
-                <p> Se analizează textul pentru creearea întrebărilor și formularea explicațiilor... Te rugăm să
-                    aștepți.
+            <div>
+                <p class="interpretare-out">Primul rezultat reprezintă numărul de persoane care nu au primit
+                    informația pe parcursul simulării.</p>
+                <p class="interpretare-out">Al doilea rezultat indică numărul de persoane care au intrat în contact
+                    cu informația, indiferent
+                    dacă au reținut-o corect sau nu.</p>
+                <p class="interpretare-out">Al treilea rezultat reprezintă numărul de persoane la care informația a
+                    ajuns într-o formă alterată, ca urmare a degradării produse în timpul retransmiterii.</p>
+                <p class="interpretare-out2">Al patrulea rezultat indică pasul simulării în care cel mai mare număr
+                    de persoane a primit pentru prima dată informația.</p>
                 </p>
-                <br>
-            </div>
-
-            <div id="quiz-screen" class="hidden">
-                <div class="progress-bar">Întrebarea <span id="current-index-txt">1</span> din <span
-                        id="total-txt">10</span></div>
-
-                <div class="question-card">
-                    <p id="question-text">Aici va apărea întrebarea...</p>
-
-                    <div class="options-container">
-                        <button class="btn-option btn-true" id="btn-true" onclick="selectAnswer(true)">Adevărat</button>
-                        <button class="btn-option btn-false" id="btn-false" onclick="selectAnswer(false)">Fals</button>
-                    </div>
-                </div>
-
-                <div id="explanation-container" class="explanation-box hidden">
-                    <p id="feedback-text"><strong>Răspuns:</strong> </p>
-                    <p id="explanation-text"></p>
-                </div>
-
-                <button id="check-btn" class="btn-action" onclick="checkCurrentAnswer()" disabled>Verifică
-                    răspunsul</button>
-                <button id="next-btn" class="btn-action hidden" onclick="nextQuestion()">Următoarea întrebare</button>
-            </div>
-
-            <div id="result-screen" class="hidden">
-                <div id="result"></div>
-                <button onclick="restartQuiz()">Încearcă din nou</button>
             </div>
         </div>
-        <br>
-        <br>
+
+
+
+
+        <section class="test">
+            <h1>Ai înțeles cum circulă informația?</h1>
+            <p>Testează acum dacă poți identifica informațiile echivalente folosind inteligența artificială.</p>
+            <div class="containertest">
+                <h2>Generator de quiz</h2>
+
+                <div id="setup-screen">
+                    <p>Introdu textul din care dorești să generezi cele 10 întrebări:</p>
+                    <br>
+                    <textarea class="textareacons" id="source-text"
+                        placeholder="Exemplu: Mihai Eminescu a fost un poet, prozator și jurnalist român..."></textarea>
+                    <br>
+                    <button id="start-btn" onclick="generateQuiz()">Generează Quiz</button>
+                </div>
+
+                <div id="loading-screen" class="hidden">
+                    <br>
+                    <p> Se analizează textul pentru creearea întrebărilor... Te rugăm să
+                        aștepți.
+                    </p>
+                    <br>
+                </div>
+
+                <div id="quiz-screen" class="hidden">
+                    <div class="progress-bar">Întrebarea <span id="current-index-txt">1</span> din <span
+                            id="total-txt">10</span></div>
+
+                    <div class="question-card">
+                        <p id="question-text">Aici va apărea întrebarea...</p>
+
+                        <div class="options-container">
+                            <button class="btn-option btn-true" id="btn-true"
+                                onclick="selectAnswer(true)">Adevărat</button>
+                            <button class="btn-option btn-false" id="btn-false"
+                                onclick="selectAnswer(false)">Fals</button>
+                        </div>
+                    </div>
+
+                    <div id="explanation-container" class="explanation-box hidden">
+                        <p id="feedback-text"><strong>Răspuns:</strong> </p>
+                        <p id="explanation-text"></p>
+                    </div>
+
+                    <button id="check-btn" class="btn-action" onclick="checkCurrentAnswer()" disabled>Verifică
+                        răspunsul</button>
+                    <button id="next-btn" class="btn-action hidden" onclick="nextQuestion()">Următoarea
+                        întrebare</button>
+                </div>
+
+                <div id="result-screen" class="hidden">
+                    <div id="result"></div>
+                    <button onclick="restartQuiz()">Încearcă din nou</button>
+                </div>
+            </div>
+            <br>
+            <br>
+        </section>
     </section>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>Colegiul Național „Spiru Haret ” Târgu Jiu, 2026</p>
+            <img src="images/logo2.png">
+            <button id="theme-toggle" class="theme-btn">
+                <i class="fa-solid fa-moon"></i> Schimbă Tema
+            </button>
+        </div>
+    </footer>
 
     <script>
         let quizData = [];
@@ -363,7 +403,7 @@
             const container = document.querySelector('.container');
 
             waves.forEach(wave => {
-                wave.style.transform = `translateY(-${scrollPosition * 1.2}px)`;
+                wave.style.transform = `translateY(-${scrollPosition * 0.9}px)`;
             });
             if (container) {
                 let containerMove = (scrollPosition) * 0.8;
@@ -372,12 +412,7 @@
 
             }
         });
-
     </script>
-
-
-
-
 
 
 
@@ -511,13 +546,12 @@ int main()
         if (calitate[i] < fake_limit && stare[i] != Susceptibil) fake_count++;
     }
 
-    cout << S << " persoane nu au aflat informatia"<<endl;
-    cout << N-S << " au aflat informatia"<<endl;
-    cout << "Informatia a ajuns fals la " << fake_count << " persoane"<<endl;
+    cout << S << " persoane nu au aflat informația"<<endl;
+    cout << N-S << " au aflat informația"<<endl;
+    cout << "Informația a ajuns fals la " << fake_count << " persoane"<<endl;
     cout << "Momentul maxim de propagare t = " << t_max << endl;
 
 
-    // Linie specială structurată pentru primul grafic
     cout << "DATA_STRUCT:" << S << " " << N-S << " " << fake_count << endl;
 
     cout << "DATA_TIMP:";
@@ -618,7 +652,35 @@ int main()
         }
     </script>
 
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const headerLogo = document.getElementById('header-logo');
+        const savedTheme = localStorage.getItem('theme');
+        const logoDarkTheme = "images/logo2.png";
+        const logoLightTheme = "images/logo_light.png";
 
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Mod luminos';
+            headerLogo.src = logoLightTheme;
+        }
+        else {
+            headerLogo.src = logoDarkTheme;
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Mod luminos';
+                headerLogo.src = logoLightTheme;
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Mod întunecat';
+                headerLogo.src = logoDarkTheme;
+            }
+        });
+    </script>
 
 </body>
 

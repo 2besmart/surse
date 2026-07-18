@@ -217,6 +217,15 @@
             </p>
         </div>
     </section>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>Colegiul Național „Spiru Haret ” Târgu Jiu, 2026</p>
+            <img src="images/logo2.png">
+            <button id="theme-toggle" class="theme-btn">
+                <i class="fa-solid fa-moon"></i> Schimbă Tema
+            </button>
+        </div>
+    </footer>
     <script>
         document.addEventListener("click", function (e) {
             if (e.target.classList.contains("tab-btn")) {
@@ -317,6 +326,27 @@
         window.addEventListener('scroll', updateTimelineProportional);
         window.addEventListener('resize', updateTimelineProportional);
         window.addEventListener('DOMContentLoaded', updateTimelineProportional);
+    </script>
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Mod Luminos';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+
+            if (document.body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Mod Luminos';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Mod Întunecat';
+            }
+        });
     </script>
 </body>
 
