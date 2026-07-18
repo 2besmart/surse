@@ -2,6 +2,7 @@
 2beSMART este o platformă digitală interactivă care îmbină educația și tehnologia pentru a explica modul în care informația se propagă și se transformă în mediul online. Platforma oferă utilizatorilor instrumente esențiale pentru dezvoltarea gândirii critice și înțelegerea fenomenului dezinformării (fake news).
 __________________________________________________________________________________________________________________________________________________________________
 ​**Public țintă**
+
 ​Aplicația se adresează în principal tinerilor cu vârste cuprinse între 14 și 34 de ani, dar și adulților interesați de educație digitală și de mecanismele prin care informațiile circulă în rețelele sociale.
 __________________________________________________________________________________________________________________________________________________________________
 ​**Caracteristici principale (Features)**
