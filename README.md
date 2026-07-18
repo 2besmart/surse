@@ -42,6 +42,6 @@ ________________________________________________________________________________
 
 Loga Radu-Ștefan , elev în cadrul Colegiului Național "Spiru Haret" din Târgu Jiu , clasa a IX-a. 
 Loga Dragoș-Gabriel , elev în cadrul Colegiului Național "Spiru Haret" din Târgu Jiu , clasa a IX-a.
-În cadrul proiectului, Dragoș a conceput materialele teoritice, precum și a creeat documentația. Radu, a codat interfața și serverul necesar rulării platformei.
+Proiectul a fost realizat în echipă, unde Radun s-a ocupat de JavaScript, HTML și CSS, iar Dragoș a gestionat redactarea resurselor, exemplelor și structurarea prezentările. Totodată, munca în echipă s-a reflectat direct în dezvoltarea simulării, ambii colaborând strâns pentru realizarea codului C++ și a graficelor.
 
 
