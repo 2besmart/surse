@@ -29,9 +29,8 @@ ________________________________________________________________________________
 ​Pentru a accesa și utiliza platforma online, utilizatorul are nevoie doar de:
 * ​O conexiune activă la internet.
 * ​Un browser web modern (Google Chrome, Microsoft Edge, Mozilla Firefox, Safari etc.).
-​🌐 Link-ul oficial al aplicației:Accesează platforma 2beSMART
-​Echipa
-Proiectul a fost realizat în echipă, unde Loga Radu Ștefan s-a ocupat de JavaScript, HTML și CSS, iar Loga Dragoș Gabriel a gestionat redactarea resurselor, exemplelor și structurarea prezentările. Totodată, munca în echipă s-a reflectat direct în dezvoltarea simulării, ambii colaborând strâns pentru realizarea codului C++ și a graficelor.
+_______________________________________________________________________________________________________________________________________________________________
+🌐 Link-ul oficial al aplicației: https://2besmart.netlify.app
 __________________________________________________________________________________________________________________________________________________________________
 **Credite**
 * ​Design & Identitate vizuală: Logoul și toate diagramele utilizate în cadrul platformei au fost create integral de către echipa noastră în aplicația Canva.
